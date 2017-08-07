@@ -1,0 +1,16 @@
+{
+  "name": "twitter-bot",
+  "version": "1.0.0",
+  "description": "Twitter bot using twit to access the twitter apo.",
+  "main": "app.js",
+  "repository": "https://github.com/AMorton09/Twitter-Bot.git",
+  "author": "Andrew Morton",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo TEST WORKED"
+  },
+  "dependencies": {
+    "twit": "^2.2.9"
+  }
+}
