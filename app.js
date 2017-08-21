@@ -1,21 +1,26 @@
-var twit = require("twit");
-var config = require('./config.js');
-var twitter = new twit(config);
+const twit = require("twit");
+const config = require('./config.js');
+const bot = new twit(config);
+const facts = require('./addons/facts.json')
 
+var randomProperty = function (obj) {
+    let keys = Object.keys(obj);
+    return obj[keys[ keys.length * Math.random() << 0]];
+};
 
 var retweet = function() {
     var params = {
-        q: '#testing12345',
+        q: '#VapeNation',
         result_type: 'recent',
         lang: 'en'
     }
-    twitter.get('search/tweets', params, function(err, data) {
+    bot.get('search/tweets', params, function(err, data) {
         // if there no errors
         if (!err) {
             // grab ID of tweet to retweet
             var retweetId = data.statuses[0].id_str;
             // Tell TWITTER to retweet
-            twitter.post('statuses/retweet/:id', {
+            bot.post('statuses/retweet/:id', {
                 id: retweetId
             }, function(err, response) {
                 if (response) {
@@ -35,17 +40,22 @@ var retweet = function() {
 }
 
 
-var favoriteTweet = function() {
-    var params = {
-        q: '#nodejs, #Nodejs',  // REQUIRED
-        result_type: 'recent',
-        lang: 'en'
-    }
+var  randTweet = function () {
+    var tweetBody = randomProperty(facts)
+    bot.post('statuses/update', { status: tweetBody }, function(err, data, response) {
+        console.log(data)
+    })
+
 }
+
+
 
 
 
 // grab & retweet as soon as program is running...
 retweet();
 // retweet in every 50 minutes
-setInterval(retweet, 3000000);
+setInterval(retweet, 300000);
+
+randTweet();
+setInterval(randTweet,300000);
