@@ -1,7 +1,7 @@
 const twit = require('twit');
 const config = require('./config.js');
 const bot = new twit(config);
-const queries = require('./addons/searchQueries.js')
+const queries = require('./addons/searchQueries.json')
 const facts = require('./addons/facts.json')
 const followBotModule = require('node-twitter-bot');
 const followBot = new followBotModule({
@@ -24,9 +24,9 @@ var tweetThis = function(message){
 
 
 
-var retweet = function(params) {
+var retweet = function() {
 
-    bot.get('search/tweets', params, function(err, data) {
+    bot.get('search/tweets', queries.params, function(err, data) {
         // if there no errors
         if (!err) {
             // grab ID of tweet to retweet
@@ -53,20 +53,11 @@ var retweet = function(params) {
 
 //follow worm
 var followWorm = function () {
-    /*var searchParams = {
-        q: '#VapeNation',
-        result_type: 'recent',
-        lang: 'en'
-    }
-    bot.get('search/tweets', searchParams, function(err, data) {
-        console.log(data.statuses[0].user)
-    })
-    */
+    var phrase = "#VapeNation";
     var options = {
-        result_type: String,
+        result_type: 'recent',
         count: 1,
     }
-    var phrase = "#VapeNation";
     followBot.followByTweets(phrase,options)
 }
 
@@ -83,12 +74,13 @@ var  randTweet = function () {
 
 
 followWorm();
+setInterval(followWorm,3000000);
 // grab & retweet as soon as program is running...
-//retweet(queries.vapenation);
-// retweet at an interval
-//setInterval(retweet(queries.vapenation), 300000);
+retweet();
+//retweet at an interval
+setInterval(retweet, 300000);
 
 //Start with random tweet
-//randTweet();
+randTweet();
 // tweet another random tweet at an interval
-//setInterval(randTweet,300000);
+setInterval(randTweet,30000000);
