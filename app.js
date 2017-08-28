@@ -1,8 +1,15 @@
 const twit = require('twit');
+const twitter = require('twitter');
 const config = require('./config.js');
 const bot = new twit(config);
-const queries = require('./addons/searchQueries.json')
-const facts = require('./addons/facts.json')
+const twitterBot = new twitter({
+    consumer_key: config.consumer_key,
+    consumer_secret: config.consumer_secret,
+    access_token_key: config.access_token,
+    access_token_secret: config.access_token_secret
+});
+const queries = require('./addons/searchQueries.json');
+const facts = require('./addons/facts.json');
 const followBotModule = require('node-twitter-bot');
 const followBot = new followBotModule({
     consumerKey : config.consumer_key,
@@ -53,12 +60,44 @@ var retweet = function() {
 
 //follow worm
 var followWorm = function () {
-    var phrase = "#VapeNation";
-    var options = {
+    let phrase = "#VapeNation";
+    let options = {
         result_type: 'recent',
-        count: 1,
+        count: 10,
     }
-    followBot.followByTweets(phrase,options)
+
+    let followParameters = {
+        q: '#VapeNation',
+        count: 10,
+        result_type: 'recent'
+    }
+
+    //followBot.followByTweets(phrase,options)
+
+
+    twitterBot.get('search/tweets', followParameters, function(err, data, response) {
+        // If there is no error, proceed
+        if(!err){
+            // Loop through the returned tweets
+            for(let i = 0; i < data.statuses.length; i++){
+                // Get the screen_name from the returned data
+                let screen_name = data.statuses[i].user.screen_name;
+                // THE FOLLOWING MAGIC GOES HERE
+                twitterBot.post('friendships/create', {screen_name}, function(err, response){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        console.log(screen_name, ': **FOLLOWED**');
+                    }
+                });
+            }
+        } else {
+            console.log(err);
+        }
+    })
+
+
+
 }
 
 
@@ -74,13 +113,13 @@ var  randTweet = function () {
 
 
 followWorm();
-setInterval(followWorm,3000000);
+setInterval(followWorm,300000);
 // grab & retweet as soon as program is running...
 retweet();
 //retweet at an interval
 setInterval(retweet, 300000);
 
 //Start with random tweet
-randTweet();
-// tweet another random tweet at an interval
-setInterval(randTweet,30000000);
+//randTweet();
+// tweet another random tweet at an interval/
+//setInterval(randTweet,30000000);

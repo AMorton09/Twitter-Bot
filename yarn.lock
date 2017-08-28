@@ -79,6 +79,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+deep-extend@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.5.0.tgz#6ef4a09b05f98b0e358d6d93d4ca3caec6672803"
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -334,7 +338,7 @@ qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
-request@^2.68.0:
+request@^2.68.0, request@^2.72.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -423,6 +427,13 @@ twit@^2.1.0, twit@^2.2.9:
     bluebird "^3.1.5"
     mime "^1.3.4"
     request "^2.68.0"
+
+twitter@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/twitter/-/twitter-1.7.1.tgz#0762378f1dc1c050e48f666aca904e24b1a962f4"
+  dependencies:
+    deep-extend "^0.5.0"
+    request "^2.72.0"
 
 uuid@^3.0.0:
   version "3.1.0"

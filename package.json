@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "node-twitter-bot": "^0.1.0",
-    "twit": "^2.2.9"
+    "twit": "^2.2.9",
+    "twitter": "^1.7.1"
   }
 }
